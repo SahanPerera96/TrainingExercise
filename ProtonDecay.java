@@ -12,12 +12,13 @@ public class ProtonDecay {
 
     static int electronDashUpCount = 0;
     static int electronSlashUpCount = 0;
-    static boolean startSlash = false;
+    static boolean startSlash = false; // initiate and end slash(_) printing
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("How many Protons are Available : ");
-        int protonNumber = scanner.nextInt();
+        int protonNumber = scanner.nextInt(); // get input from console
         String space = " ";
         String electron = "n";
         String proton = "p";
@@ -36,10 +37,10 @@ public class ProtonDecay {
         int totalElectronDashSpace = electronNumber;
         int totalProtoneDashSpace = electronNumber;
 
-        boolean firstElectrons = false;
-        for(int i = 1; i <=electronNumber; i++){
+        boolean firstElectrons = false; // used to check if what is first print is an neutron
+        for(int i = 1; i <=electronNumber; i++){ //we run a for loop for all the electrons in the diagram
 
-            minus = i - minus;
+            minus = i - minus; // helps in getting the values on every level of the chart. level 1 = 1 , level 2 = 2, level 3 = 4
             if(firstElectrons){
 //                if(isPowerOfTwo(minus)){
 //                    for(int j = minus;j >0 ; j--){
@@ -89,15 +90,17 @@ public class ProtonDecay {
         }
 
     }
-    public  static int electronsProduced(int protonNo){
+    public  static int electronsProduced(int protonNo){ // calculate the total no of electrons produced for the protons added
         int electronNo = 0;
         for (int i = 0; i <= protonNo; i++) {
 
-            if (Math.pow(2, i) <= protonNo){
+            if (Math.pow(2, i) <= protonNo){ // check the nearest power for the proton value but mst be less than the proton no
                 electronNo = (int) Math.pow(2, i+2);
+                // cast to int since we don't use higher values above 1000
+                // new electron no would be 2  powers above the nearest proton value
             }
         }
-        return electronNo -1;
+        return electronNo -1; // minus -1 to get the exact value 2,7,15,31,63
     }
 
     public static boolean isPowerOfTwo(int num){
@@ -125,12 +128,12 @@ public class ProtonDecay {
     }
 
     public static void drawSpace(String space, String valuePassed, int totalSpace, int protonCount, int protonNumber){
-
+        // print value inside a single line
         for(int sp = 1; sp<= calculateLeftSpacing(totalSpace);sp ++){
-            System.out.print(space);
+            System.out.print(space); // print left side space
         }
         if(valuePassed.equals("p")){
-            if(protonCount < protonNumber){
+            if(protonCount < protonNumber){ // as long as proton count is less than proton no start printing
                 System.out.print(valuePassed);
 
             }else {
@@ -153,12 +156,13 @@ public class ProtonDecay {
 
     }
 
+    // draw values line by line for the chart
     public static int drawTypeSet(String space, String valuePassed, int totalSpace, int minus, int protonNumber){
-        if(isPowerOfTwo(minus)){
-            for(int j = minus;j >0 ; j--){
+        if(isPowerOfTwo(minus)){ // make sure minus is a power of 2
+            for(int j = minus;j >0 ; j--){ // start printing values
                 drawSpace(space,valuePassed,totalSpace,protonCount,protonNumber);
 
-                if(valuePassed.equals("p")){
+                if(valuePassed.equals("p")){ // do the increment to keep track of how much protons and neutrons drawn
                     protonCount ++;
                 }else {
                     electronCount ++;
@@ -167,7 +171,7 @@ public class ProtonDecay {
 
             }
 
-            // timer
+            // timer to waid for 1 sec
             try
             {
                 Thread.sleep(1000);
@@ -176,15 +180,15 @@ public class ProtonDecay {
             {
                 Thread.currentThread().interrupt();
             }
-            System.out.println();
-            totalSpace = calculateLeftSpacing(totalSpace);
+            System.out.println(); // once all the details per line is print start a new line
+            totalSpace = calculateLeftSpacing(totalSpace);  // calculate he space left on the left side
 
 
         }
-        return totalSpace;
+        return totalSpace; // since total space is going to be iterated used it must be returned and assigned on the new methods called
     }
 
-     // dash draw
+    // dash draw
     public static int drawTypeDashSet(String space, String valuePassed, int totalSpace, int minus, int protonNumber, String dash){
         if(isPowerOfTwo(minus)){
             for(int j = minus;j >0 ; j--){
@@ -410,4 +414,4 @@ public class ProtonDecay {
 //        return false;
 //    }
 
-    }
+}
